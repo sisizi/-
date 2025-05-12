@@ -12,12 +12,12 @@
     <description>🔥热门推荐🔥大学春招、秋招、应届项目，SpringCloud + SpringCloud Alibaba + RocketMQ等技术架构，完成项目管理+BPM流程管理+AI智能项目，帮助学生主打就业的项目。</description>
 
     <modules>
-        <module>pmhub-gateway</module>
-        <module>pmhub-base</module>
-        <module>pmhub-auth</module>
-        <module>pmhub-modules</module>
-        <module>pmhub-api</module>
-        <module>pmhub-monitor</module>
+        <module>sisizi-gateway</module>
+        <module>sisizi-base</module>
+        <module>sisizi-auth</module>
+        <module>sisizi-modules</module>
+        <module>sisizi-api</module>
+        <module>sisizi-monitor</module>
 
     </modules>
     <packaging>pom</packaging>
