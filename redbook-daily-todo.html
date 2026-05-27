@@ -345,6 +345,85 @@
         color: #005b53;
       }
 
+      .keyword-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .keyword-card {
+        padding: 16px;
+        border: 1px solid #e0e5eb;
+        border-radius: 8px;
+        background: #fbfcfd;
+      }
+
+      .keyword-card h3 {
+        margin-top: 0;
+      }
+
+      .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 4px 10px;
+        border: 1px solid #d7dde5;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #3d4651;
+        font-size: 13px;
+      }
+
+      .tag.hot {
+        border-color: #f0c1c6;
+        background: #fff0f2;
+        color: #9b2430;
+      }
+
+      .tag.tool {
+        border-color: #b9dbd7;
+        background: #edf8f6;
+        color: #005b53;
+      }
+
+      .keyword-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .copy-button {
+        min-height: 34px;
+        padding: 0 12px;
+        color: #3d4651;
+      }
+
+      .priority-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .priority-list li {
+        padding: 10px 12px;
+        border: 1px solid #e6eaf0;
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .priority-list strong {
+        color: var(--red-dark);
+      }
+
       .table-wrap {
         overflow-x: auto;
         border: 1px solid var(--line);
@@ -469,6 +548,7 @@
         }
 
         .metrics,
+        .keyword-grid,
         .split,
         .nav {
           grid-template-columns: 1fr;
@@ -551,6 +631,7 @@
       <div class="layout">
         <nav class="nav" aria-label="页面导航">
           <a href="#core">每日核心指标</a>
+          <a href="#keywords">关键词库</a>
           <a href="#morning">早间搜索</a>
           <a href="#noon">午间跟进</a>
           <a href="#night">晚间高峰</a>
@@ -583,6 +664,92 @@
               <li class="todo"><input type="checkbox" data-id="core-6" /><span>记录所有线索和转化状态</span></li>
               <li class="todo"><input type="checkbox" data-id="core-7" /><span>复盘当天评论回复率、私信率、网站访问/生成情况</span></li>
             </ul>
+          </section>
+
+          <section id="keywords" class="section">
+            <div class="section-header">
+              <div>
+                <h2>关键词库与筛选规则</h2>
+                <p class="section-note">搜索时优先按“最新”排序，先抓明确求助、截止时间近、能马上进入私信诊断的人。</p>
+              </div>
+            </div>
+
+            <div class="keyword-grid">
+              <div class="keyword-card">
+                <h3>Tolesson.ai 课件转化词</h3>
+                <div class="tag-cloud">
+                  <span class="tag tool">老师备课</span>
+                  <span class="tag tool">课件做不完</span>
+                  <span class="tag tool">AI 课件</span>
+                  <span class="tag tool">PPT 课件生成</span>
+                  <span class="tag tool">教案生成</span>
+                  <span class="tag tool">公开课 PPT</span>
+                  <span class="tag tool">说课 PPT</span>
+                  <span class="tag tool">随堂练习</span>
+                  <span class="tag tool">课堂练习</span>
+                  <span class="tag tool">教学设计</span>
+                  <span class="tag tool">单元教学设计</span>
+                  <span class="tag tool">备课神器</span>
+                  <span class="tag tool">小学语文课件</span>
+                  <span class="tag tool">初中英语课件</span>
+                  <span class="tag tool">高中历史课件</span>
+                  <span class="tag tool">明天公开课</span>
+                  <span class="tag tool">公开课来不及</span>
+                </div>
+                <div class="keyword-actions">
+                  <button class="copy-button" type="button" data-copy="老师备课, 课件做不完, AI 课件, PPT 课件生成, 教案生成, 公开课 PPT, 说课 PPT, 随堂练习, 教学设计, 单元教学设计, 备课神器, 明天公开课, 公开课来不及">复制课件搜索包</button>
+                </div>
+              </div>
+
+              <div class="keyword-card">
+                <h3>PPT 急单与人工服务词</h3>
+                <div class="tag-cloud">
+                  <span class="tag hot">谁能帮我做 PPT</span>
+                  <span class="tag hot">有没有人会做 PPT</span>
+                  <span class="tag hot">PPT 代做</span>
+                  <span class="tag hot">PPT 美化</span>
+                  <span class="tag hot">PPT 救急</span>
+                  <span class="tag hot">PPT 加急</span>
+                  <span class="tag hot">今晚要交 PPT</span>
+                  <span class="tag hot">明天汇报 PPT</span>
+                  <span class="tag hot">老板要 PPT</span>
+                  <span class="tag hot">PPT 太丑了怎么办</span>
+                  <span class="tag hot">答辩 PPT</span>
+                  <span class="tag hot">述职 PPT</span>
+                  <span class="tag hot">竞聘 PPT</span>
+                  <span class="tag hot">BP 美化</span>
+                  <span class="tag hot">路演 PPT</span>
+                </div>
+                <div class="keyword-actions">
+                  <button class="copy-button" type="button" data-copy="谁能帮我做 PPT, 有没有人会做 PPT, PPT 代做, PPT 美化, PPT 救急, PPT 加急, 今晚要交 PPT, 明天汇报 PPT, 老板要 PPT, PPT 太丑了怎么办, 答辩 PPT, 述职 PPT, 竞聘 PPT, BP 美化, 路演 PPT">复制 PPT 搜索包</button>
+                </div>
+              </div>
+
+              <div class="keyword-card">
+                <h3>组合搜索公式</h3>
+                <ul class="priority-list">
+                  <li><strong>年级 + 科目 + 课件：</strong>小学语文课件、初中英语课件、高中历史课件。</li>
+                  <li><strong>场景 + 截止时间：</strong>明天公开课、今晚要交 PPT、公开课来不及。</li>
+                  <li><strong>工具 + 结果：</strong>AI 生成 PPT、AI 课件、教案生成、随堂练习生成。</li>
+                  <li><strong>痛点 + 求助：</strong>课件做不完、PPT 太丑、谁能帮我改课件。</li>
+                </ul>
+                <div class="keyword-actions">
+                  <button class="copy-button" type="button" data-copy="小学语文课件, 初中英语课件, 高中历史课件, 明天公开课, 今晚要交 PPT, 公开课来不及, AI 生成 PPT, AI 课件, 教案生成, 随堂练习生成, 课件做不完, 谁能帮我改课件">复制组合搜索包</button>
+                </div>
+              </div>
+
+              <div class="keyword-card">
+                <h3>优先级判断</h3>
+                <ul class="priority-list">
+                  <li><strong>最高优先：</strong>正文有“求助、急、今晚、明天、公开课、来不及、谁能帮”。</li>
+                  <li><strong>适合网站：</strong>老师、教培、新手教师、课题明确，需要课件/教案/练习初稿。</li>
+                  <li><strong>适合人工：</strong>商业汇报、BP、述职、答辩、已有 PPT 但需要美化精修。</li>
+                  <li><strong>低优先：</strong>纯教程、模板分享、吐槽但没有求助、评论区已经很多同行报价。</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="quote">执行顺序：先搜课件转化词，再搜 PPT 急单词；先评论具体建议，再私信问年级、科目、课题和截止时间，确认适合后再发 iss7.online。</p>
           </section>
 
           <section id="morning" class="section">
@@ -1012,6 +1179,40 @@
       document.querySelectorAll(".filter").forEach((button) => {
         button.addEventListener("click", () => applyFilter(button.dataset.filter));
       });
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const originalText = button.textContent;
+          try {
+            await copyText(button.dataset.copy);
+            button.textContent = "已复制";
+          } catch (error) {
+            button.textContent = "请手动复制";
+          }
+          window.setTimeout(() => {
+            button.textContent = originalText;
+          }, 1400);
+        });
+      });
+
+      async function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        const success = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (!success) {
+          throw new Error("copy failed");
+        }
+      }
 
       loadState();
     </script>
