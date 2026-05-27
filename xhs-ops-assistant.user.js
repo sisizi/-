@@ -1,11 +1,14 @@
 // ==UserScript==
 // @name         XHS Ops Assistant - Human Review
 // @namespace    https://iss7.online/
-// @version      0.1.0
+// @version      0.1.1
 // @description  小红书运营辅助面板：定时提醒、线索记录、搜索入口、评论/私信/笔记草稿。只辅助人工确认，不自动发布或批量评论。
 // @author       Codex
 // @match        *://*.xiaohongshu.com/*
 // @match        *://xiaohongshu.com/*
+// @match        https://www.xiaohongshu.com/*
+// @match        https://creator.xiaohongshu.com/*
+// @match        https://pro.xiaohongshu.com/*
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
@@ -113,12 +116,16 @@
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return structuredClone(DEFAULT_STATE);
+      if (!raw) return cloneDefaultState();
       return mergeState(DEFAULT_STATE, JSON.parse(raw));
     } catch (error) {
       console.warn("[XHS Ops Assistant] Failed to load state", error);
-      return structuredClone(DEFAULT_STATE);
+      return cloneDefaultState();
     }
+  }
+
+  function cloneDefaultState() {
+    return JSON.parse(JSON.stringify(DEFAULT_STATE));
   }
 
   function mergeState(base, incoming) {
@@ -893,6 +900,15 @@
     ].join("\n");
   }
 
-  renderPanel();
-  setInterval(maybeNotify, 60 * 1000);
+  function boot() {
+    if (!document.body) {
+      requestAnimationFrame(boot);
+      return;
+    }
+    console.info("[XHS Ops Assistant] loaded", location.href);
+    renderPanel();
+    setInterval(maybeNotify, 60 * 1000);
+  }
+
+  boot();
 })();
