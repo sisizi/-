@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>小红书每日获客 Todo</title>
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --surface: #ffffff;
+        --surface-soft: #f1f5f4;
+        --text: #20242a;
+        --muted: #626b77;
+        --line: #d9dee5;
+        --red: #d73f4a;
+        --red-dark: #ad2934;
+        --teal: #00796f;
+        --teal-soft: #e3f3f0;
+        --amber: #9b6b12;
+        --shadow: 0 12px 32px rgba(25, 32, 44, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          "Microsoft YaHei",
+          sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--red-dark);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 56px;
+      }
+
+      .topbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: end;
+        margin-bottom: 22px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.12;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        margin-top: 12px;
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .date-field {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 40px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        font: inherit;
+      }
+
+      input[type="date"],
+      input[type="text"],
+      select,
+      textarea {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      input[type="date"] {
+        border: 0;
+        background: transparent;
+        color: var(--text);
+      }
+
+      button {
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+        cursor: pointer;
+        padding: 0 14px;
+        white-space: nowrap;
+      }
+
+      button:hover {
+        border-color: #b9c0c9;
+        background: #fafafa;
+      }
+
+      .primary {
+        border-color: var(--red);
+        background: var(--red);
+        color: #ffffff;
+      }
+
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--red);
+        border-radius: 8px;
+        background: var(--red);
+        color: #ffffff;
+        white-space: nowrap;
+      }
+
+      .primary:hover {
+        border-color: var(--red-dark);
+        background: var(--red-dark);
+      }
+
+      .button-link:hover {
+        border-color: var(--red-dark);
+        background: var(--red-dark);
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .metric {
+        min-height: 92px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .progress-shell {
+        overflow: hidden;
+        height: 10px;
+        border-radius: 999px;
+        background: #e4e8ee;
+        margin: 6px 0 24px;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--red), var(--teal));
+        transition: width 160ms ease;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        gap: 20px;
+        align-items: start;
+      }
+
+      .nav {
+        position: sticky;
+        top: 16px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav a {
+        display: block;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .nav a:hover {
+        border-color: var(--red);
+        text-decoration: none;
+      }
+
+      .section {
+        margin-bottom: 18px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        margin: 18px 0 10px;
+        color: var(--text);
+        font-size: 16px;
+      }
+
+      .section-note,
+      .template {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .todo-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .todo {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        min-height: 36px;
+        padding: 8px 10px;
+        border: 1px solid #e6eaf0;
+        border-radius: 8px;
+        background: #fbfcfd;
+      }
+
+      .todo input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        accent-color: var(--red);
+      }
+
+      .todo span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .todo.is-done span {
+        color: #7c8794;
+        text-decoration: line-through;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .quote {
+        margin: 12px 0 0;
+        padding: 14px;
+        border-left: 4px solid var(--teal);
+        background: var(--teal-soft);
+        border-radius: 0 8px 8px 0;
+      }
+
+      .filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .filter {
+        min-height: 34px;
+        padding: 0 12px;
+      }
+
+      .filter.active {
+        border-color: var(--teal);
+        background: var(--teal-soft);
+        color: #005b53;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        min-width: 1180px;
+        border-collapse: collapse;
+        background: var(--surface);
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #e8ebf0;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+        font-size: 13px;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        background: #f1f4f8;
+        color: #3d4651;
+        z-index: 1;
+      }
+
+      td input[type="text"],
+      td select,
+      td textarea {
+        width: 100%;
+        min-height: 34px;
+        padding: 7px 8px;
+      }
+
+      td textarea {
+        resize: vertical;
+        min-height: 34px;
+      }
+
+      td input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--red);
+      }
+
+      .table-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 14px 0;
+      }
+
+      .status-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .status-list span {
+        padding: 5px 9px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface-soft);
+        color: #44515d;
+        font-size: 13px;
+      }
+
+      .site-band {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        padding: 16px;
+        border: 1px solid #bedbd7;
+        border-radius: 8px;
+        background: var(--teal-soft);
+      }
+
+      .site-band strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .site-band p {
+        color: #37534f;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 920px) {
+        .topbar,
+        .layout,
+        .site-band {
+          grid-template-columns: 1fr;
+        }
+
+        .toolbar {
+          justify-content: flex-start;
+        }
+
+        .metrics {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .nav {
+          position: static;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(100% - 20px, 1180px);
+          padding-top: 18px;
+        }
+
+        .metrics,
+        .split,
+        .nav {
+          grid-template-columns: 1fr;
+        }
+
+        .section {
+          padding: 16px;
+        }
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+        }
+
+        .toolbar,
+        .nav,
+        .filters,
+        .table-actions {
+          display: none;
+        }
+
+        .page {
+          width: 100%;
+          padding: 0;
+        }
+
+        .section,
+        .metric {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <div>
+          <h1>小红书每日获客 Todo</h1>
+          <p class="subtitle">
+            每天从小红书找到老师、课件、PPT 制作相关潜在客户，将合适用户引导到
+            <a href="https://iss7.online/?utm_source=xiaohongshu&utm_medium=todo&utm_campaign=courseware" target="_blank" rel="noreferrer">iss7.online</a>
+            使用 Tolesson.ai。勾选状态和线索表会自动保存在当前浏览器。
+          </p>
+        </div>
+        <div class="toolbar">
+          <label class="date-field">
+            日期
+            <input id="todoDate" type="date" />
+          </label>
+          <button id="printPage" type="button">打印</button>
+          <button id="resetDay" type="button">重置今日</button>
+          <button id="openSite" class="primary" type="button">打开网站</button>
+        </div>
+      </header>
+
+      <section class="metrics" aria-label="今日进度">
+        <div class="metric">
+          <strong id="doneCount">0</strong>
+          <span>已完成任务</span>
+        </div>
+        <div class="metric">
+          <strong id="totalCount">0</strong>
+          <span>总任务数</span>
+        </div>
+        <div class="metric">
+          <strong id="progressText">0%</strong>
+          <span>完成进度</span>
+        </div>
+        <div class="metric">
+          <strong id="leadCount">0</strong>
+          <span>今日线索</span>
+        </div>
+      </section>
+
+      <div class="progress-shell" aria-label="完成进度">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <div class="layout">
+        <nav class="nav" aria-label="页面导航">
+          <a href="#core">每日核心指标</a>
+          <a href="#morning">早间搜索</a>
+          <a href="#noon">午间跟进</a>
+          <a href="#night">晚间高峰</a>
+          <a href="#posts">每日发帖</a>
+          <a href="#comment">评论检查</a>
+          <a href="#dm">私信检查</a>
+          <a href="#leads">线索记录</a>
+          <a href="#review">晚间复盘</a>
+        </nav>
+
+        <div>
+          <section class="section site-band">
+            <div>
+              <strong>Tolesson.ai 转化入口</strong>
+              <p>建议在私信确认“年级、科目、课题、课时”后，再发送网站。不要在公开评论区直接刷链接。</p>
+            </div>
+            <a class="button-link" href="https://iss7.online/?utm_source=xiaohongshu&utm_medium=todo&utm_campaign=courseware" target="_blank" rel="noreferrer">访问 iss7.online</a>
+          </section>
+
+          <section id="core" class="section">
+            <div class="section-header">
+              <h2>每日核心指标</h2>
+            </div>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="core-1" /><span>搜索关键词不少于 20 个</span></li>
+              <li class="todo"><input type="checkbox" data-id="core-2" /><span>筛选高意向帖子不少于 30 条</span></li>
+              <li class="todo"><input type="checkbox" data-id="core-3" /><span>发布个性化评论 10 条</span></li>
+              <li class="todo"><input type="checkbox" data-id="core-4" /><span>私信承接有回复用户，响应时间控制在 3 分钟内</span></li>
+              <li class="todo"><input type="checkbox" data-id="core-5" /><span>引导 3-5 位合适用户访问 https://iss7.online/</span></li>
+              <li class="todo"><input type="checkbox" data-id="core-6" /><span>记录所有线索和转化状态</span></li>
+              <li class="todo"><input type="checkbox" data-id="core-7" /><span>复盘当天评论回复率、私信率、网站访问/生成情况</span></li>
+            </ul>
+          </section>
+
+          <section id="morning" class="section">
+            <div class="section-header">
+              <h2>08:30-09:00 早间搜索</h2>
+            </div>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="morning-1" /><span>搜索“老师备课”</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-2" /><span>搜索“课件做不完”</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-3" /><span>搜索“明天公开课”</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-4" /><span>搜索“PPT 救急”</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-5" /><span>搜索“谁能帮我做 PPT”</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-6" /><span>按“最新”排序，优先看 24 小时内帖子</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-7" /><span>收藏或记录 10 条高意向帖子</span></li>
+              <li class="todo"><input type="checkbox" data-id="morning-8" /><span>对最急的 3 条帖子写个性化评论</span></li>
+            </ul>
+            <h3>评论方向</h3>
+            <div class="split">
+              <p class="section-note">急单：先问截止时间、页数、是否已有资料。</p>
+              <p class="section-note">老师课件：先问年级、科目、课题、课时。</p>
+            </div>
+            <p class="quote">AI 工具：提示“可以先生成初稿，再人工精修”。</p>
+          </section>
+
+          <section id="noon" class="section">
+            <div class="section-header">
+              <h2>12:30-13:00 午间跟进</h2>
+            </div>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="noon-1" /><span>查看早间评论是否有回复</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-2" /><span>对有回复用户发私信</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-3" /><span>搜索“AI 课件”</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-4" /><span>搜索“教案生成”</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-5" /><span>搜索“公开课 PPT”</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-6" /><span>搜索“说课 PPT”</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-7" /><span>新增 10 条候选帖子</span></li>
+              <li class="todo"><input type="checkbox" data-id="noon-8" /><span>发布 3 条个性化评论</span></li>
+            </ul>
+            <h3>老师课件私信模板</h3>
+            <p class="quote">我先帮你判断下适合直接生成还是人工精修。你发我 4 个信息就行：年级、科目、课题、上课时长。如果只是先要课件初稿，可以用 Tolesson.ai 先生成一版，再看哪些页需要改。</p>
+            <h3>网站引导模板</h3>
+            <p class="quote">你这个更适合先用工具起稿。打开 https://iss7.online/ ，输入年级、科目、课题和课时，先生成一版 PPT 课件/教案/练习。生成后如果某几页不满意，再单独精修会更省时间。</p>
+          </section>
+
+          <section id="night" class="section">
+            <div class="section-header">
+              <h2>21:30-23:00 晚间高峰</h2>
+            </div>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="night-1" /><span>搜索“今晚要交 PPT”</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-2" /><span>搜索“明天汇报 PPT”</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-3" /><span>搜索“公开课来不及”</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-4" /><span>搜索“备课神器”</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-5" /><span>搜索“PPT 课件生成”</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-6" /><span>筛选 10 条高意向帖子</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-7" /><span>发布 4 条个性化评论</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-8" /><span>跟进当天所有已回复用户</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-9" /><span>对明确课件/教案需求用户发送 iss7.online</span></li>
+              <li class="todo"><input type="checkbox" data-id="night-10" /><span>记录是否访问、是否生成、是否需要人工精修</span></li>
+            </ul>
+          </section>
+
+          <section id="posts" class="section">
+            <div class="section-header">
+              <h2>每日发帖任务</h2>
+            </div>
+            <p class="section-note">每天至少发 1 篇小红书笔记，优先用案例型内容。</p>
+            <ul class="todo-list" style="margin-top: 12px">
+              <li class="todo"><input type="checkbox" data-id="post-1" /><span>周一：输入一个课题，AI 生成课件 PPT 是什么效果</span></li>
+              <li class="todo"><input type="checkbox" data-id="post-2" /><span>周二：明天公开课，如何快速生成一版课件初稿</span></li>
+              <li class="todo"><input type="checkbox" data-id="post-3" /><span>周三：教案转 PPT，不要直接堆文字</span></li>
+              <li class="todo"><input type="checkbox" data-id="post-4" /><span>周四：小学/初中/高中某科课件生成案例</span></li>
+              <li class="todo"><input type="checkbox" data-id="post-5" /><span>周五：老师备课最耗时的 3 个环节怎么省</span></li>
+              <li class="todo"><input type="checkbox" data-id="post-6" /><span>周六：AI 生成课件后，老师还需要改什么</span></li>
+              <li class="todo"><input type="checkbox" data-id="post-7" /><span>周日：一周线索复盘和高频问题整理</span></li>
+            </ul>
+            <p class="quote">不知道你的课题适不适合生成，可以评论年级、科目和课题，我帮你判断先做课件、教案还是练习。</p>
+          </section>
+
+          <section id="comment" class="section">
+            <div class="section-header">
+              <h2>评论检查清单</h2>
+            </div>
+            <div class="filters" aria-label="任务筛选">
+              <button class="filter active" data-filter="all" type="button">全部</button>
+              <button class="filter" data-filter="todo" type="button">未完成</button>
+              <button class="filter" data-filter="done" type="button">已完成</button>
+            </div>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="comment-1" /><span>是否提到了对方的具体场景</span></li>
+              <li class="todo"><input type="checkbox" data-id="comment-2" /><span>是否先给了一个小建议</span></li>
+              <li class="todo"><input type="checkbox" data-id="comment-3" /><span>是否没有直接丢网址</span></li>
+              <li class="todo"><input type="checkbox" data-id="comment-4" /><span>是否没有写微信、手机号、二维码</span></li>
+              <li class="todo"><input type="checkbox" data-id="comment-5" /><span>是否不像复制粘贴广告</span></li>
+              <li class="todo"><input type="checkbox" data-id="comment-6" /><span>是否留下了一个容易回复的问题</span></li>
+            </ul>
+            <p class="quote">如果是明天公开课，先别急着美化，建议先把课题、年级、课时和课堂练习定下来，再生成页面。你这是常规课、公开课，还是复习课？</p>
+          </section>
+
+          <section id="dm" class="section">
+            <div class="section-header">
+              <h2>私信检查清单</h2>
+            </div>
+            <p class="section-note">私信不要一上来推网站，先判断需求。</p>
+            <ul class="todo-list" style="margin-top: 12px">
+              <li class="todo"><input type="checkbox" data-id="dm-1" /><span>问清楚年级</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-2" /><span>问清楚科目</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-3" /><span>问清楚课题</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-4" /><span>问清楚课时/截止时间</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-5" /><span>判断是否适合 Tolesson.ai</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-6" /><span>适合时再发送 https://iss7.online/</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-7" /><span>告诉对方先生成初稿，再决定是否精修</span></li>
+              <li class="todo"><input type="checkbox" data-id="dm-8" /><span>记录对方反馈</span></li>
+            </ul>
+          </section>
+
+          <section id="leads" class="section">
+            <div class="section-header">
+              <div>
+                <h2>线索记录表</h2>
+                <p class="section-note">直接在表格里填写，内容会自动保存到当前日期。</p>
+              </div>
+            </div>
+            <div class="table-actions">
+              <button id="addLead" class="primary" type="button">新增线索</button>
+              <button id="exportCsv" type="button">导出 CSV</button>
+              <button id="clearLeads" type="button">清空线索</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>关键词</th>
+                    <th>帖子链接</th>
+                    <th>用户昵称</th>
+                    <th>需求类型</th>
+                    <th>年级/科目/课题</th>
+                    <th>截止时间</th>
+                    <th>回复</th>
+                    <th>私信</th>
+                    <th>发网站</th>
+                    <th>访问/生成</th>
+                    <th>需精修</th>
+                    <th>状态</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="leadBody"></tbody>
+              </table>
+            </div>
+            <div class="status-list" aria-label="状态选项">
+              <span>待回复</span>
+              <span>已评论</span>
+              <span>已私信</span>
+              <span>已发网站</span>
+              <span>已生成</span>
+              <span>需人工精修</span>
+              <span>已成交</span>
+              <span>无效</span>
+            </div>
+          </section>
+
+          <section id="review" class="section">
+            <div class="section-header">
+              <h2>晚间复盘</h2>
+            </div>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="review-1" /><span>今天搜索了多少关键词</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-2" /><span>筛选了多少帖子</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-3" /><span>评论了多少条</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-4" /><span>有多少人回复</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-5" /><span>有多少人进入私信</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-6" /><span>有多少人适合 Tolesson.ai</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-7" /><span>发送了多少次网站链接</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-8" /><span>有多少人完成访问或生成</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-9" /><span>哪 3 条评论回复率最高</span></li>
+              <li class="todo"><input type="checkbox" data-id="review-10" /><span>明天要优化哪个关键词或话术</span></li>
+            </ul>
+            <h3>明日准备</h3>
+            <ul class="todo-list">
+              <li class="todo"><input type="checkbox" data-id="tomorrow-1" /><span>选好明天要发的笔记主题</span></li>
+              <li class="todo"><input type="checkbox" data-id="tomorrow-2" /><span>准备 1 张课件生成前后对比图</span></li>
+              <li class="todo"><input type="checkbox" data-id="tomorrow-3" /><span>准备 3 条可改写评论模板</span></li>
+              <li class="todo"><input type="checkbox" data-id="tomorrow-4" /><span>准备 3 个学科案例：小学、初中、高中各 1 个</span></li>
+              <li class="todo"><input type="checkbox" data-id="tomorrow-5" /><span>检查 https://iss7.online/ 是否能正常打开</span></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const siteUrl = "https://iss7.online/?utm_source=xiaohongshu&utm_medium=todo&utm_campaign=courseware";
+      const dateInput = document.querySelector("#todoDate");
+      const checkboxes = Array.from(document.querySelectorAll("input[type='checkbox'][data-id]"));
+      const leadBody = document.querySelector("#leadBody");
+      const doneCount = document.querySelector("#doneCount");
+      const totalCount = document.querySelector("#totalCount");
+      const progressText = document.querySelector("#progressText");
+      const progressBar = document.querySelector("#progressBar");
+      const leadCount = document.querySelector("#leadCount");
+      const statusOptions = ["待回复", "已评论", "已私信", "已发网站", "已生成", "需人工精修", "已成交", "无效"];
+      const leadFields = ["keyword", "postUrl", "nickname", "type", "topic", "deadline", "replied", "dm", "siteSent", "visited", "refine", "status", "note"];
+
+      function todayString() {
+        const date = new Date();
+        const offset = date.getTimezoneOffset();
+        const local = new Date(date.getTime() - offset * 60000);
+        return local.toISOString().slice(0, 10);
+      }
+
+      function storageKey() {
+        return `redbook-daily-todo:${dateInput.value || todayString()}`;
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem(storageKey());
+        const state = raw ? JSON.parse(raw) : { checks: {}, leads: [] };
+        checkboxes.forEach((box) => {
+          box.checked = Boolean(state.checks[box.dataset.id]);
+          box.closest(".todo").classList.toggle("is-done", box.checked);
+        });
+        renderLeads(state.leads || []);
+        updateProgress();
+      }
+
+      function readState() {
+        const checks = {};
+        checkboxes.forEach((box) => {
+          checks[box.dataset.id] = box.checked;
+        });
+        return {
+          checks,
+          leads: readLeads(),
+        };
+      }
+
+      function saveState() {
+        localStorage.setItem(storageKey(), JSON.stringify(readState()));
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const total = checkboxes.length;
+        const done = checkboxes.filter((box) => box.checked).length;
+        const percent = total ? Math.round((done / total) * 100) : 0;
+        doneCount.textContent = String(done);
+        totalCount.textContent = String(total);
+        progressText.textContent = `${percent}%`;
+        progressBar.style.width = `${percent}%`;
+        leadCount.textContent = String(readLeads().filter(isLeadFilled).length);
+      }
+
+      function emptyLead() {
+        return {
+          keyword: "",
+          postUrl: "",
+          nickname: "",
+          type: "",
+          topic: "",
+          deadline: "",
+          replied: false,
+          dm: false,
+          siteSent: false,
+          visited: false,
+          refine: false,
+          status: "待回复",
+          note: "",
+        };
+      }
+
+      function renderLeads(leads) {
+        const rows = leads.length ? leads : [emptyLead()];
+        leadBody.innerHTML = "";
+        rows.forEach((lead, index) => {
+          const tr = document.createElement("tr");
+          tr.dataset.index = String(index);
+          tr.innerHTML = `
+            <td><input type="text" data-field="keyword" value="${escapeAttr(lead.keyword)}" /></td>
+            <td><input type="text" data-field="postUrl" value="${escapeAttr(lead.postUrl)}" /></td>
+            <td><input type="text" data-field="nickname" value="${escapeAttr(lead.nickname)}" /></td>
+            <td><input type="text" data-field="type" value="${escapeAttr(lead.type)}" placeholder="课件/PPT/教案" /></td>
+            <td><textarea data-field="topic">${escapeHtml(lead.topic)}</textarea></td>
+            <td><input type="text" data-field="deadline" value="${escapeAttr(lead.deadline)}" /></td>
+            <td><input type="checkbox" data-field="replied" ${lead.replied ? "checked" : ""} /></td>
+            <td><input type="checkbox" data-field="dm" ${lead.dm ? "checked" : ""} /></td>
+            <td><input type="checkbox" data-field="siteSent" ${lead.siteSent ? "checked" : ""} /></td>
+            <td><input type="checkbox" data-field="visited" ${lead.visited ? "checked" : ""} /></td>
+            <td><input type="checkbox" data-field="refine" ${lead.refine ? "checked" : ""} /></td>
+            <td>${statusSelect(lead.status)}</td>
+            <td><textarea data-field="note">${escapeHtml(lead.note)}</textarea></td>
+            <td><button type="button" data-remove="${index}">删除</button></td>
+          `;
+          leadBody.appendChild(tr);
+        });
+      }
+
+      function statusSelect(value) {
+        const options = statusOptions
+          .map((item) => `<option value="${escapeAttr(item)}" ${item === value ? "selected" : ""}>${escapeHtml(item)}</option>`)
+          .join("");
+        return `<select data-field="status">${options}</select>`;
+      }
+
+      function readLeads() {
+        return Array.from(leadBody.querySelectorAll("tr")).map((tr) => {
+          const lead = {};
+          leadFields.forEach((field) => {
+            const input = tr.querySelector(`[data-field="${field}"]`);
+            if (!input) return;
+            lead[field] = input.type === "checkbox" ? input.checked : input.value.trim();
+          });
+          return lead;
+        });
+      }
+
+      function isLeadFilled(lead) {
+        return leadFields.some((field) => {
+          if (["replied", "dm", "siteSent", "visited", "refine"].includes(field)) {
+            return Boolean(lead[field]);
+          }
+          return String(lead[field] || "").trim() !== "" && !(field === "status" && lead[field] === "待回复");
+        });
+      }
+
+      function escapeAttr(value = "") {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function escapeHtml(value = "") {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function exportCsv() {
+        const header = ["日期", "关键词", "帖子链接", "用户昵称", "需求类型", "年级/科目/课题", "截止时间", "是否回复", "是否私信", "是否发送网站", "是否访问/生成", "是否需要精修", "状态", "备注"];
+        const rows = readLeads().filter(isLeadFilled).map((lead) => [
+          dateInput.value,
+          lead.keyword,
+          lead.postUrl,
+          lead.nickname,
+          lead.type,
+          lead.topic,
+          lead.deadline,
+          lead.replied ? "是" : "否",
+          lead.dm ? "是" : "否",
+          lead.siteSent ? "是" : "否",
+          lead.visited ? "是" : "否",
+          lead.refine ? "是" : "否",
+          lead.status,
+          lead.note,
+        ]);
+        const csv = [header, ...rows].map((row) => row.map(csvCell).join(",")).join("\n");
+        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `小红书线索记录-${dateInput.value}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function csvCell(value) {
+        return `"${String(value ?? "").replaceAll('"', '""')}"`;
+      }
+
+      function applyFilter(filter) {
+        document.querySelectorAll(".filter").forEach((button) => {
+          button.classList.toggle("active", button.dataset.filter === filter);
+        });
+        document.querySelectorAll(".todo").forEach((item) => {
+          const checked = item.querySelector("input[type='checkbox']").checked;
+          item.classList.toggle("hidden", (filter === "todo" && checked) || (filter === "done" && !checked));
+        });
+      }
+
+      dateInput.value = todayString();
+
+      checkboxes.forEach((box) => {
+        box.addEventListener("change", () => {
+          box.closest(".todo").classList.toggle("is-done", box.checked);
+          saveState();
+        });
+      });
+
+      dateInput.addEventListener("change", loadState);
+      leadBody.addEventListener("input", saveState);
+      leadBody.addEventListener("change", saveState);
+      leadBody.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-remove]");
+        if (!button) return;
+        const rows = readLeads();
+        rows.splice(Number(button.dataset.remove), 1);
+        renderLeads(rows);
+        saveState();
+      });
+
+      document.querySelector("#addLead").addEventListener("click", () => {
+        const rows = readLeads();
+        rows.push(emptyLead());
+        renderLeads(rows);
+        saveState();
+      });
+
+      document.querySelector("#clearLeads").addEventListener("click", () => {
+        if (!confirm("确认清空今天的线索记录？")) return;
+        renderLeads([emptyLead()]);
+        saveState();
+      });
+
+      document.querySelector("#exportCsv").addEventListener("click", exportCsv);
+      document.querySelector("#printPage").addEventListener("click", () => window.print());
+      document.querySelector("#openSite").addEventListener("click", () => window.open(siteUrl, "_blank", "noopener"));
+      document.querySelector("#resetDay").addEventListener("click", () => {
+        if (!confirm("确认重置今天的勾选和线索记录？")) return;
+        localStorage.removeItem(storageKey());
+        loadState();
+      });
+
+      document.querySelectorAll(".filter").forEach((button) => {
+        button.addEventListener("click", () => applyFilter(button.dataset.filter));
+      });
+
+      loadState();
+    </script>
+  </body>
+</html>
